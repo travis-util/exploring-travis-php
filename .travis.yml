@@ -48,7 +48,7 @@ after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
 - php -d memory_limit=-1 $(phpenv which composer)
 - phpunit
-- phpdbg $(phpenv which phpunit) --coverage-text .
+- phpdbg -qrr $(phpenv which phpunit) --coverage-text .
 - phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text .
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
