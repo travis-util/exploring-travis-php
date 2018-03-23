@@ -51,6 +51,7 @@ after_script:
 - phpunit
 - if command phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text --whitelist tests tests ; fi
 - phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text --whitelist tests tests
+- phpunit -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -d html_errors=on --coverage-text --whitelist tests tests
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
 - ls ~/.phpenv/versions/*/lib/php/extensions/*/xdebug.so
