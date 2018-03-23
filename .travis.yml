@@ -37,6 +37,7 @@ before_install:
   command -v php-fpm
 - php -r "echo phpinfo().PHP_EOL;"
 - php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
+- phpunit --coverage-text .
 - if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
     cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
     phpenv config-rm xdebug.ini;
@@ -48,7 +49,7 @@ after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
 - php -d memory_limit=-1 $(phpenv which composer)
 - phpunit
-- phpdbg -qrr $(phpenv which phpunit) --coverage-text .
+- if command phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text . ; fi
 - phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text .
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
