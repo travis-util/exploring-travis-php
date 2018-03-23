@@ -19,15 +19,19 @@ services:
 - postgresql
 
 env:
-  global:
-  matrix:
+  # global:
+  # matrix:
 
 matrix:
   fast_finish: true
   include:
   allow_failures:
+  - nightly
 
 before_install:
+- php ~/.phpenv/versions/$(phpenv version-name)/bin/composer
+- php -r "echo phpinfo().PHP_EOL;"
+- php -r "echo ini_get('memory_limit').PHP_EOL;"
 - if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then 
     echo removing xdebug.ini;
     phpenv config-rm xdebug.ini;
