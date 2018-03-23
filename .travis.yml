@@ -29,12 +29,19 @@ matrix:
   - php: nightly
 
 before_install:
-- php ~/.phpenv/versions/$(phpenv version-name)/bin/composer
 - php -r "echo phpinfo().PHP_EOL;"
-- php -r "echo ini_get('memory_limit').PHP_EOL;"
-- if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then 
+- php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
+- command -v phpdbg
+- if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+    cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
     echo removing xdebug.ini;
     phpenv config-rm xdebug.ini;
   fi
 
 script: true
+
+after_script:
+- ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
+- php ~/.phpenv/versions/$(phpenv version-name)/bin/composer
+- php ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
+
