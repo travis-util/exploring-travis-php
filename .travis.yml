@@ -29,6 +29,7 @@ matrix:
   - php: nightly
 
 before_install:
+- phpenv versions
 - ls ~/.phpenv/shims
 - command -v php;
   command -v php-cgi;
