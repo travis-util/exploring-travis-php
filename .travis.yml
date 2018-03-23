@@ -59,4 +59,5 @@ after_script:
 - ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so
 - phpenv which composer
 - phpenv which phpunit
+- find / -name xdebug.ini
 
