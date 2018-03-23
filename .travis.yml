@@ -36,3 +36,5 @@ before_install:
     echo removing xdebug.ini;
     phpenv config-rm xdebug.ini;
   fi
+
+script: true
