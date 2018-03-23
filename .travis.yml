@@ -1,0 +1,34 @@
+---
+language: php
+
+cache:
+  directories:
+  # - $HOME/.composer/cache/files
+
+php:
+- nightly
+- 7.2
+- 7.1
+- 7.0
+- 5.6
+- 5.5
+- 5.4
+
+services:
+- mysql
+- postgresql
+
+env:
+  global:
+  matrix:
+
+matrix:
+  fast_finish: true
+  include:
+  allow_failures:
+
+before_install:
+- if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then 
+    echo removing xdebug.ini;
+    phpenv config-rm xdebug.ini;
+  fi
