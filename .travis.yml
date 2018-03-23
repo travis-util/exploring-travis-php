@@ -37,7 +37,7 @@ before_install:
   command -v php-fpm
 - php -r "echo phpinfo().PHP_EOL;"
 - php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
-- phpunit --coverage-text --whitelist tests tests
+- phpunit --coverage-text --whitelist . tests
 - if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
     cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
     phpenv config-rm xdebug.ini;
@@ -49,9 +49,9 @@ after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
 - php -d memory_limit=-1 $(phpenv which composer)
 - phpunit
-- if command -v phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text --whitelist tests tests ; fi
-- phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text --whitelist tests tests
-- phpunit -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -d html_errors=on --coverage-text --whitelist tests tests
+- if command -v phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text --whitelist . tests ; fi
+- phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text --whitelist . tests
+- phpunit -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -d html_errors=on --coverage-text --whitelist . tests
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
 - ls ~/.phpenv/versions/*/lib/php/extensions/*/xdebug.so
