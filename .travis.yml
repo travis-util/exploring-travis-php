@@ -26,7 +26,7 @@ matrix:
   fast_finish: true
   include:
   allow_failures:
-  - nightly
+  - php: nightly
 
 before_install:
 - php ~/.phpenv/versions/$(phpenv version-name)/bin/composer
