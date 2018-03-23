@@ -45,10 +45,10 @@ script: true
 
 after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
-- php -d memory_limit=-1 ~/.phpenv/versions/$(phpenv version-name)/bin/composer
 - php -d memory_limit=-1 $(phpenv which composer)
-- php ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
-- php -d html_errors=on -d zend_extension="~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so" ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
+- php $(phpenv which phpunit)
+- php -d html_errors=on -d zend_extension="~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so" $(phpenv which phpunit)
+- php -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" $(phpenv which phpunit)
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
 - ls ~/.phpenv/versions/*/lib/php/extensions/*/xdebug.so
