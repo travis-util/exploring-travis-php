@@ -29,12 +29,15 @@ matrix:
   - php: nightly
 
 before_install:
+- ls ~/.phpenv/shims
+- command -v php;
+  command -v php-cgi;
+  command -v phpdbg;
+  command -v php-fpm
 - php -r "echo phpinfo().PHP_EOL;"
 - php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
-- command -v phpdbg
 - if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-    cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
-    echo removing xdebug.ini;
+    cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
     phpenv config-rm xdebug.ini;
   fi
 
@@ -42,6 +45,10 @@ script: true
 
 after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
-- php ~/.phpenv/versions/$(phpenv version-name)/bin/composer
-- php ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
+- php -d memory_limit=-1 ~/.phpenv/versions/$(phpenv version-name)/bin/composer
+# - php -d html_errors=on -d zend_extension="~/.phpenv/versions/7.1.11/lib/php/extensions/no-debug-zts-20160303/xdebug.so" ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
+- php -d html_errors=on ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
+- ls ~/.phpenv/versions
+- ls ~/.phpenv/versions/*/lib/php/extensions
+- ls ~/.phpenv/versions/*/lib/php/extensions/*/xdebug.so
 
