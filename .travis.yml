@@ -46,9 +46,13 @@ script: true
 after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
 - php -d memory_limit=-1 ~/.phpenv/versions/$(phpenv version-name)/bin/composer
-# - php -d html_errors=on -d zend_extension="~/.phpenv/versions/7.1.11/lib/php/extensions/no-debug-zts-20160303/xdebug.so" ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
-- php -d html_errors=on ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
+- php -d memory_limit=-1 $(phpenv which composer)
+- php ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
+- php -d html_errors=on -d zend_extension="~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so" ~/.phpenv/versions/$(phpenv version-name)/bin/phpunit
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
 - ls ~/.phpenv/versions/*/lib/php/extensions/*/xdebug.so
+- ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so
+- phpenv which composer
+- phpenv which phpunit
 
