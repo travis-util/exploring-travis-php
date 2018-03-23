@@ -32,3 +32,5 @@ final class Email
         }
     }
 }
+
+// from: https://phpunit.de/getting-started/phpunit-4.html
