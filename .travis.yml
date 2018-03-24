@@ -40,9 +40,6 @@ before_install:
 - php -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
 - php -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
 - composer install
-- if phpunit --check-version; then echo tocheck; else echo nottocheck; fi
-- if phpunit --self-update; then phpunit --self-update; fi
-- if phpunit --self-upgrade; then phpunit --self-upgrade; fi
 - if phpunit --atleast-version 5; then
     phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests;
   else
