@@ -49,9 +49,10 @@ before_install:
     cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
     install --directory ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
     mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
-    phpenv config-rm xdebug.ini;
     php -r "print_r(get_loaded_extensions(TRUE));";
-    phpenv config-add xdebug.ini;
+    mv ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d;
+    php -r "print_r(get_loaded_extensions(TRUE));";
+    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
     php -r "print_r(get_loaded_extensions(TRUE));";
   fi
 
@@ -64,6 +65,8 @@ after_script:
 - vendor/bin/phpunit --version
 - phpunit
 - if command -v phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests ; fi
+- php --php-ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini -r "print_r(get_loaded_extensions(TRUE));"
+- php --php-ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini $(phpenv which phpunit)
 - phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
 - phpunit -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -d html_errors=on --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
 # html_errors: PHP_INI_ALL
