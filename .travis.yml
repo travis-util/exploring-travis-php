@@ -40,7 +40,14 @@ before_install:
 - php -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
 - php -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
 - composer install
-- if phpunit --atleast-version 5; then phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests; fi
+- phpunit --check-version
+- phpunit --self-update
+- phpunit --self-upgrade
+- if phpunit --atleast-version 5; then
+    phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests;
+  else
+    phpunit --coverage-text --bootstrap vendor/autoload.php --color tests;
+  fi
 # --whitelist requires PHPUnit 5
 - if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
     cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
