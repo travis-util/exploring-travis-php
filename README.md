@@ -6,6 +6,9 @@ Two versions of phpenv exist:
 * [CHH/phpenv](https://github.com/CHH/phpenv) used by Travis [Building a PHP project](https://docs.travis-ci.com/user/languages/php/) and
 * [phpenv/phpenv](https://github.com/phpenv/phpenv) which has more documentation (which may apply to CHH/phpenv).
 
+### config-rm
+`phpenv config-add xdebug.ini` does not work after `phpenv config-rm xdebug.ini`.
+
 ## [html visual diff](https://www.google.com/search?q=html+visual+diff)
 * *[HtmlDiff](https://www.w3.org/wiki/HtmlDiff)* @w3.org
 
