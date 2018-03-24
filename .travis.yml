@@ -47,8 +47,8 @@ before_install:
 - php -r "print_r(get_loaded_extensions(TRUE));"
 - if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
     cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
-    install --directory ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand
-    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand
+    install --directory ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
+    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
     phpenv config-rm xdebug.ini;
     php -r "print_r(get_loaded_extensions(TRUE));";
     phpenv config-add xdebug.ini;
