@@ -54,7 +54,7 @@ after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
 - php -d memory_limit=-1 $(phpenv which composer)
 # memory_limit: PHP_INI_ALL
-- ~/.composer/vendor/bin/phpunit --version
+- vendor/bin/phpunit --version
 - phpunit
 - if command -v phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests ; fi
 - phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
