@@ -11,9 +11,9 @@ final class EmailTest extends TestCase
         );
     }
 
-    public function CannotBeCreatedFromInvalidEmailAddress()
+    public function CannotBeCreatedFromInvalidEmailAddress() // no more a test
     {
-        $this->setExpectedException(InvalidArgumentException::class);
+        // $this->setExpectedException(InvalidArgumentException::class); // requires PHP 5
 
         Email::fromString('invalid');
     }
