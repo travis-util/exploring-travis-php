@@ -65,8 +65,9 @@ after_script:
 - vendor/bin/phpunit --version
 - phpunit
 - if command -v phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests ; fi
-- php --php-ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini -r "print_r(get_loaded_extensions(TRUE));"
-- php --php-ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini $(phpenv which phpunit)
+- php --php-ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini --php-ini ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d -r "print_r(get_loaded_extensions(TRUE));"
+- php --php-ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini $(phpenv which phpunit) --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
+# Does not set other extensions...
 - phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
 - phpunit -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -d html_errors=on --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
 # html_errors: PHP_INI_ALL
