@@ -15,8 +15,8 @@ php:
 - 5.4
 
 services:
-- mysql
-- postgresql
+# - mysql
+# - postgresql
 
 env:
   # global:
@@ -37,8 +37,7 @@ before_install:
   command -v php-fpm
 - php -r "echo phpinfo().PHP_EOL;"
 - php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
-- php -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
-- php -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
+- php -r "print_r(get_loaded_extensions(TRUE));"
 - composer install
 - if phpunit --atleast-version 5; then
     phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests;
@@ -46,12 +45,13 @@ before_install:
     phpunit --coverage-text --bootstrap vendor/autoload.php --color tests;
   fi
 # --whitelist requires PHPUnit 5
-- if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-    cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
+- if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+    cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
     phpenv config-rm xdebug.ini;
+    php -r "print_r(get_loaded_extensions(TRUE));";
+    phpenv config-add xdebug.ini;
+    php -r "print_r(get_loaded_extensions(TRUE));";
   fi
-- php -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
-- php -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
 
 script: true
 
@@ -66,13 +66,14 @@ after_script:
 - phpunit -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -d html_errors=on --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
 # html_errors: PHP_INI_ALL
 # zend_extension: php.ini only
-- php -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
-- php -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
+- php -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -r "print_r(get_loaded_extensions(TRUE));"
 
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
 - ls ~/.phpenv/versions/*/lib/php/extensions/*/xdebug.so
 - ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so
+- phpenv
+- phpenv --help
 - phpenv which composer
 - phpenv which phpunit
 - find / -name xdebug.ini
