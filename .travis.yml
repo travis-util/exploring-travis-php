@@ -37,22 +37,32 @@ before_install:
   command -v php-fpm
 - php -r "echo phpinfo().PHP_EOL;"
 - php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
+- php -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
+- php -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
 - composer install
 - phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
 - if [ -f /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
     cat /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
     phpenv config-rm xdebug.ini;
   fi
+- php -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
+- php -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
 
 script: true
 
 after_script:
 - ls --color ~/.phpenv/versions/$(phpenv version-name)/bin
 - php -d memory_limit=-1 $(phpenv which composer)
+# memory_limit: PHP_INI_ALL
 - phpunit
 - if command -v phpdbg; then phpdbg -qrr $(phpenv which phpunit) --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests ; fi
 - phpunit -d html_errors=on -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
 - phpunit -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -d html_errors=on --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
+# html_errors: PHP_INI_ALL
+# zend_extension: php.ini only
+- php -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -r "print_r(get_loaded_extensions()); echo PHP_EOL;"
+- php -d zend_extension="$(ls ~/.phpenv/versions/$(phpenv version-name)/lib/php/extensions/*/xdebug.so)" -r "print_r(get_loaded_extensions(TRUE)); echo PHP_EOL;"
+
 - ls ~/.phpenv/versions
 - ls ~/.phpenv/versions/*/lib/php/extensions
 - ls ~/.phpenv/versions/*/lib/php/extensions/*/xdebug.so
