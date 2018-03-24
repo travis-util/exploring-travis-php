@@ -37,7 +37,6 @@ before_install:
   command -v php-fpm
 - php -r "echo phpinfo().PHP_EOL;"
 - php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
-- php -r "print_r(get_loaded_extensions(TRUE));"
 - composer install
 - if phpunit --atleast-version 5; then
     phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests;
@@ -45,8 +44,11 @@ before_install:
     phpunit --coverage-text --bootstrap vendor/autoload.php --color tests;
   fi
 # --whitelist requires PHPUnit 5
+- php -r "print_r(get_loaded_extensions(TRUE));"
 - if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
     cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
+    install --directory ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand
+    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand
     phpenv config-rm xdebug.ini;
     php -r "print_r(get_loaded_extensions(TRUE));";
     phpenv config-add xdebug.ini;
