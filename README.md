@@ -14,3 +14,6 @@ Two versions of phpenv exist:
 
 ## PHPUnit
 Is not always up to date to minor or major version in Travis, but fairly good. The Travis phpenv version cannot be updated or upgrated (PHPUnit 4, 5, 6, 7). Install PHPUnit with composer for latest version.
+
+## sensiolabs/security-checker
+* [An error occurred: gnutls_handshake() failed: Handshake failed](https://github.com/sensiolabs/security-checker/issues/100)
