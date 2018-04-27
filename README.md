@@ -1,6 +1,8 @@
 # exploring-travis-php
 Showing PHP configuration parameters on Travis CI
 
+[![Build Status](https://travis-ci.org/travis-util/exploring-travis-php.svg?branch=master)](https://travis-ci.org/travis-util/exploring-travis-php)
+
 ## phpenv
 Two versions of phpenv exist:
 * [CHH/phpenv](https://github.com/CHH/phpenv) used by Travis [Building a PHP project](https://docs.travis-ci.com/user/languages/php/) and
