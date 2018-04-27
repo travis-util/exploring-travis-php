@@ -38,22 +38,24 @@ before_install:
 - php -r "echo phpinfo().PHP_EOL;"
 - php -r "echo ini_get('memory_limit').PHP_EOL;" # See phpinfo!
 - composer install
-- if phpunit --atleast-version 5; then
-    phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests;
+- |
+  if phpunit --atleast-version 5; then
+    phpunit --coverage-text --whitelist src --bootstrap vendor/autoload.php --color tests
   else
-    phpunit --coverage-text --bootstrap vendor/autoload.php --color tests;
+    phpunit --coverage-text --bootstrap vendor/autoload.php --color tests
   fi
 # --whitelist requires PHPUnit 5
-- php -r "print_r(get_loaded_extensions(TRUE));"
-- if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-    cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini;
-    install --directory ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
-    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
-    php -r "print_r(get_loaded_extensions(TRUE));";
-    mv ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d;
-    php -r "print_r(get_loaded_extensions(TRUE));";
-    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand;
-    php -r "print_r(get_loaded_extensions(TRUE));";
+- |
+  php -r "print_r(get_loaded_extensions(TRUE));"
+  if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+    cat ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+    install --directory ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand
+    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand
+    php -r "print_r(get_loaded_extensions(TRUE));"
+    mv ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d
+    php -r "print_r(get_loaded_extensions(TRUE));"
+    mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ~/.phpenv/versions/$(phpenv version-name)/etc/on-demand
+    php -r "print_r(get_loaded_extensions(TRUE));"
   fi
 
 script: true
